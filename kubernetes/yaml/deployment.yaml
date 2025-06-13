@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-auth
+  labels:
+    app: event-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-auth
+  template:
+    metadata:
+      labels:
+        app: event-auth
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: event-api
+          image: ghcr.io/leandrodalbo/event-auth:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
